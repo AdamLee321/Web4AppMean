@@ -1,0 +1,23 @@
+<h2 class="page-header">Contact Us</h2>
+<form class="col-md-4" (submit)="onSubmitContact()">
+  <p-messages [value]="msgs"></p-messages>
+  <p-growl [value]="growlmsgs"></p-growl>
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" class="form-control" [(ngModel)]="name" name="name">
+  </div>
+  <div>
+    <label>Email</label>
+    <input type="text" class="form-control" [(ngModel)]="email" name="email">
+  </div>
+  <div>
+    <label>Subject</label>
+    <input type="text" class="form-control" [(ngModel)]="subject" name="subject">
+  </div>
+  <div>
+    <label>Description</label>
+    <textarea class="form-control" [(ngModel)]="description" name="description"></textarea>
+  </div>
+  <br>
+  <input type="submit" class="btn btn-primary" value="Contact">
+</form>
