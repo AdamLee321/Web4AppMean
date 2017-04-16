@@ -1,3 +1,112 @@
-<p>
-  manage works!
-</p>
+<div *ngIf="user">
+  <h2 class="page-header">Store management</h2>
+  <div>
+  <h3>Admin Profile</h3>
+  <p-growl [value]="growlmsgs"></p-growl>
+  <ul class="list-group">
+    <li class="list-group-item">Name: {{user.name}}</li>
+    <li class="list-group-item">Username: {{user.username}}</li>
+    <li class="list-group-item">Email: {{user.email}}</li>
+  </ul>
+  </div>
+  <br>
+  <div>
+  <h3>Inventory List</h3>
+  <ul class="">
+    <table class="table table-hover table-striped table-responsive table-condensed">
+                <thead>
+                    <tr>
+                        <th class="col-xs-2">Name</th>
+                        <th class="col-xs-1">Price</th>
+                        <th class="col-xs-2">Description</th>
+                        <th class="col-xs-2">quantity</th>
+                        <th class="col-xs-2">imageUrl</th>
+                        <th class="col-xs-1">Department</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of PatientsFiltered">
+                        <td>{{item.p_full_name}}</td>
+                        <td>{{item.P_DOB | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item.p_tel_num}}</td>
+                        <td>{{item.p_Address1}}</td>
+                        <td>{{item.p_Address2}}</td>
+                        <td>{{item.p_city}}</td>
+                        <td>{{item.p_county | uppercase}}</td>
+                    </tr>
+                </tbody>
+            </table>
+  </ul>
+  </div>
+  <div class="col-sm-12">
+  <h3>Inventory Management</h3>
+  <!--Add Product-->
+      <div class="col-md-4">
+        <h4><strong>Add Inventory</strong></h4>
+        <form (submit)="onAddProduct()">
+        <div class="form-group">
+          <label>Product Name</label>
+          <input type="text" class="form-control" [(ngModel)]="name" name="name">
+        </div>
+        <div>
+          <label>Price</label>
+          <input type="text" class="form-control" [(ngModel)]="price" name="price">
+        </div>
+        <div>
+          <label>Description</label>
+          <input type="text" class="form-control" [(ngModel)]="desc" name="desc">
+        </div>
+        <div>
+          <label>Quantity</label>
+          <input type="text" class="form-control" [(ngModel)]="qty" name="qty">
+        </div>
+        <div>
+          <label>Image</label>
+          <input type="text" class="form-control" [(ngModel)]="image" name="image">
+        </div>
+        <div>
+          <label>Department</label>
+          <input type="text" class="form-control" [(ngModel)]="department" name="department">
+        </div>
+        <br>
+        <input type="submit" class="btn btn-success" value="Add">
+    </form>
+    </div>
+    <div class="col-md-4">
+    <h4><strong>Update Product</strong></h4>
+    <form (submit)="onLoginSubmit()">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="form-control" [(ngModel)]="username" name="username">
+      </div>
+      <div>
+        <label>Password</label>
+        <input type="password" class="form-control" [(ngModel)]="password" name="password">
+      </div>
+      <br>
+      <input type="submit" class="btn btn-primary" value="Update">
+    </form>
+    </div>
+    <div class="col-md-4">
+      <h4><strong>Delete Product</strong></h4>
+    <form (submit)="onLoginSubmit()">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="form-control" [(ngModel)]="username" name="username">
+      </div>
+      <div>
+        <label>Password</label>
+        <input type="password" class="form-control" [(ngModel)]="password" name="password">
+      </div>
+      <br>
+      <input type="submit" class="btn btn-danger" value="Delete">
+    </form>
+    </div>
+  </div>
+  
+    <!--Spacer for the footer do not remove-->
+  <div class="spacer"></div>
+  <div class="note">Note: Add, update and delete customers and admin also coming soon...</div>
+
+
+

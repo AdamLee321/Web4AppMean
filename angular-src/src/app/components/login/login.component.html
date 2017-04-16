@@ -1,4 +1,4 @@
-<h2 class="page-header">Log In</h2>
+<h2 class="page-header">Please sign in</h2>
 <form (submit)="onLoginSubmit()">
   <p-messages [value]="msgs"></p-messages>
   <p-growl [value]="growlmsgs"></p-growl>
@@ -14,4 +14,5 @@
   <input type="submit" class="btn btn-primary" value="Login">
 </form>
 <br>
+<a [routerLink]="['/login']" *ngIf="authType == 'register'">Have an account?</a>
 <p style="color:red">Developer note: Admin login is at /admin</p>

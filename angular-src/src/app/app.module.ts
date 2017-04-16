@@ -18,15 +18,18 @@ import { ProfileComponent }     from './components/profile/profile.component';
 import { ContactusComponent }   from './components/contactus/contactus.component';
 import { AdminloginComponent }  from './components/adminlogin/adminlogin.component';
 import { AboutComponent }       from './components/about/about.component';
-import { ProductsComponent }    from './components/products/products.component';
 import { CartComponent }        from './components/cart/cart.component';
 import { ManageComponent }      from './components/manage/manage.component';
+import { InventoryComponent }   from './components/inventory/inventory.component';
+
 
 //NOTE:services dont get added to the app.module file automatically add below and also add to providers.
 import { ValidateService }  from './services/validate.service';
 import { AuthService }      from './services/auth.service';
-
-
+import { ProductService }   from './services/product.service';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { FinalcheckoutComponent } from './components/finalcheckout/finalcheckout.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
@@ -38,8 +41,11 @@ const appRoutes: Routes = [
   {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
   {path:'about', component: AboutComponent},
   {path:'cart', component: CartComponent},
-  {path:'products', component: ProductsComponent},
+  {path:'inventory', component: InventoryComponent},
   {path:'admin/manage', component: ManageComponent},
+  {path:'checkout', component: CheckoutComponent},
+  {path:'finalcheckout', component: FinalcheckoutComponent}
+
 ]
 
 @NgModule({
@@ -54,9 +60,12 @@ const appRoutes: Routes = [
     ContactusComponent,
     AdminloginComponent,
     AboutComponent,
-    ProductsComponent,
     CartComponent,
-    ManageComponent
+    ManageComponent,
+    InventoryComponent,
+    CheckoutComponent,
+    FinalcheckoutComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +75,7 @@ const appRoutes: Routes = [
     MessagesModule,
     GrowlModule
   ],
-  providers: [ValidateService, AuthService, AuthGuard],
+  providers: [ValidateService, AuthService, ProductService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

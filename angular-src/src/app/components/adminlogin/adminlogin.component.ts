@@ -9,12 +9,13 @@ import { Router }            from '@angular/router';
 })
 export class AdminloginComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   onLoginSubmit(){
-
+    //If login is success 
+    this.router.navigate(['manage']);
   }
 }

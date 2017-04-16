@@ -65,4 +65,9 @@ router.get('/profile', passport.authenticate('jwt', {session:false}), (req, res,
     res.json({user: req.user});
 });
 
+//Contact
+router.get('/contactus',(req, res, next) => {
+    
+});
+
 module.exports = router;
