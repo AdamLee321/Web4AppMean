@@ -533,9 +533,45 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 var FinalcheckoutComponent = (function () {
-    function FinalcheckoutComponent() {
+    function FinalcheckoutComponent(_zone) {
+        this._zone = _zone;
     }
     FinalcheckoutComponent.prototype.ngOnInit = function () {
+    };
+    FinalcheckoutComponent.prototype.openCheckout = function () {
+        var handler = window.StripeCheckout.configure({
+            key: 'pk_test_oi0sKPJYLGjdvOXOM8tE8cMa',
+            locale: 'auto',
+            token: function (token) {
+                // You can access the token ID with `token.id`.
+                // Get the token ID to your server-side code for use.
+            }
+        });
+        handler.open({
+            name: 'Demo Site',
+            description: '2 widgets',
+            amount: 2000
+        });
+    };
+    FinalcheckoutComponent.prototype.getToken = function () {
+        var _this = this;
+        this.message = 'Loading...';
+        window.Stripe.card.createToken({
+            number: this.cardNumber,
+            exp_month: this.expiryMonth,
+            exp_year: this.expiryYear,
+            cvc: this.cvc
+        }, function (status, response) {
+            // Wrapping inside the Angular zone
+            _this._zone.run(function () {
+                if (status === 200) {
+                    _this.message = "Success! Card token " + response.card.id + ".";
+                }
+                else {
+                    _this.message = response.error.message;
+                }
+            });
+        });
     };
     FinalcheckoutComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -543,9 +579,10 @@ var FinalcheckoutComponent = (function () {
             template: __webpack_require__(788),
             styles: [__webpack_require__(772)]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgZone"]) === 'function' && _a) || Object])
     ], FinalcheckoutComponent);
     return FinalcheckoutComponent;
+    var _a;
 }());
 //# sourceMappingURL=C:/Users/adaml/Desktop/Web4Mean/angular-src/src/finalcheckout.component.js.map
 
@@ -1330,7 +1367,7 @@ module.exports = "<h2 class=\"page-header\">Dashboard</h2>\n<p>Welcome to your d
 /***/ 788:
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  finalcheckout works!\n</p>\n"
+module.exports = "<h1>Custom Stripe Form</h1>\n\n<form action=\"\" method=\"POST\" id=\"payment-form\" (submit)=\"getToken()\">\n  <span class=\"payment-message\">{{message}}</span>\n\n  <div class=\"form-row\">\n    <label>\n      <span>Card Number</span>\n      <input [(ngModel)]=\"cardNumber\" name=\"card-number\" type=\"text\" size=\"20\" data-stripe=\"number\">\n    </label>\n  </div>\n\n  <div class=\"form-row\">\n    <label>\n      <span>Expiration (MM/YY)</span>\n      <input [(ngModel)]=\"expiryMonth\" name=\"expiry-month\" type=\"text\" size=\"2\" data-stripe=\"exp_month\">\n    </label>\n    <span> / </span>\n    <input [(ngModel)]=\"expiryYear\" name=\"expiry-year\" type=\"text\" size=\"2\" data-stripe=\"exp_year\">\n  </div>\n\n  <div class=\"form-row\">\n    <label>\n      <span>CVC</span>\n      <input [(ngModel)]=\"cvc\" name=\"cvc\" type=\"text\" size=\"4\" data-stripe=\"cvc\">\n    </label>\n  </div>\n\n  <input type=\"submit\" value=\"Submit Payment\">\n</form>\n<button (click)=\"openCheckout()\">Purchase</button>\n"
 
 /***/ }),
 
