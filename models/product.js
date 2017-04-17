@@ -36,6 +36,10 @@ module.exports.addProduct = function(newProduct, callback){
     newProduct.save(callback);
 }
 
-// module.exports.getProducts = function(products, callback){
-//     products.find(products, callback);
+ module.exports.getProducts = function(products, callback){
+     Product.find(products, callback);
+}
+
+// module.exports.getOneProduct = function(product, callback){
+//     Product.findOne({_id: mongoose.ObjectId(req.params.id)})
 // }

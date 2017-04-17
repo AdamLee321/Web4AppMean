@@ -25,15 +25,20 @@ var ProductService = (function () {
     function ProductService(http) {
         this.http = http;
     }
+    //Add a Product
     ProductService.prototype.addProduct = function (product) {
         //going to the backend
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('products/addproduct', product, { headers: headers })
+        return this.http.post('http://localhost:3000/products/addproduct', product, { headers: headers })
             .map(function (res) { return res.json(); });
     };
+    //Get All Products
     ProductService.prototype.getProducts = function () {
-        return this.http.get('products/getproducts').map(function (res) { return res.json(); });
+        return this.http.get('http://localhost:3000/products/getproducts').map(function (res) { return res.json(); });
+    };
+    ProductService.prototype.deleteTask = function (id) {
+        return this.http.delete('http://localhost:3000/products/product/' + id).map(function (res) { return res.json; });
     };
     ProductService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
@@ -844,10 +849,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ManageComponent = (function () {
     function ManageComponent(productService, authService, router) {
+        var _this = this;
         this.productService = productService;
         this.authService = authService;
         this.router = router;
         this.growlmsgs = [];
+        this.products = [];
+        this.productService.getProducts().subscribe(function (products) {
+            _this.products = products;
+        });
     }
     ManageComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -863,15 +873,16 @@ var ManageComponent = (function () {
         var product = {
             name: this.name,
             price: this.price,
-            desc: this.desc,
-            qty: this.qty,
-            image: this.image,
+            description: this.description,
+            quantity: this.quantity,
+            imageUrl: this.imageUrl,
             department: this.department
         };
         console.log(product);
         this.productService.addProduct(product).subscribe(function (data) {
             if (data.success) {
                 _this.growlmsgs.push({ severity: 'success', summary: 'Product has been added to the database.' });
+                _this.refreshList();
             }
             else {
                 _this.growlmsgs.push({ severity: 'error', summary: 'Oops! Something went wrong! Please try again.' });
@@ -879,8 +890,20 @@ var ManageComponent = (function () {
             }
         });
     };
-    ManageComponent.prototype.getAllProducts = function () {
-        //Return all products to an array.
+    ManageComponent.prototype.refreshList = function () {
+        this.productService.getProducts();
+    };
+    ManageComponent.prototype.deleteProduct = function (id) {
+        var _this = this;
+        var products = this.products;
+        this.productService.deleteTask(id).subscribe(function (data) {
+            for (var i = 0; i < products.length; i++) {
+                if (products[i]._id == id) {
+                    products.splice(i, 1);
+                    _this.refreshList();
+                }
+            }
+        });
     };
     ManageComponent = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -1168,13 +1191,13 @@ var AuthService = (function () {
         //going to the backend
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('users/register', user, { headers: headers })
+        return this.http.post('http://localhost:3000/users/register', user, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
-        return this.http.post('users/authenticate', user, { headers: headers })
+        return this.http.post('http://localhost:3000/users/authenticate', user, { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.getProfile = function () {
@@ -1182,7 +1205,7 @@ var AuthService = (function () {
         this.loadToken();
         headers.append('Authorization', this.authToken);
         headers.append('Content-Type', 'application/json');
-        return this.http.get('users/profile', { headers: headers })
+        return this.http.get('http://localhost:3000/users/profile', { headers: headers })
             .map(function (res) { return res.json(); });
     };
     AuthService.prototype.storeUserData = function (token, user) {
@@ -1413,7 +1436,7 @@ module.exports = "<div class=\"jumbotron text-center\">\n  <h1>MEAN eCommerce Ap
 /***/ 793:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"col-md-12\" id=\"rcorners2\"><app-checkout ></app-checkout></div>\n<div class=\"col-md-4\">\n  <ul *ngFor=\"let product of products\">\n  <li>{{ product.name }}<li>\n  <li>{{ product.price }}</li>\n  </ul>\n</div>\n<!--row 1-->\n<div class=\"col-sm-12\"> \n<div class=\"row\">\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n</div>\n</div>\n<!--row2-->\n<div class=\"col-sm-12\"> \n<div class=\"row\">\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"spacer\"></div>\n</div>\n\n"
+module.exports = "<div class=\"col-md-12\" id=\"rcorners2\"><app-checkout ></app-checkout></div>\n<div class=\"col-md-4\">\n  <ul *ngFor=\"let product of products\">\n  <li>{{ product.name }}<li>\n  <li>{{ product.price }}</li>\n  </ul>\n</div>\n\n<!--row 1-->\n<div class=\"col-sm-12\"> \n<div class=\"row\">\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n</div>\n</div>\n<!--row2-->\n<div class=\"col-sm-12\"> \n<div class=\"row\">\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-sm-6 col-md-4\">\n    <div class=\"thumbnail\">\n      <img src=\"...\" alt=\"...\">\n      <div class=\"caption\">\n        <h3>Thumbnail label</h3>\n        <p>...</p>\n        <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"spacer\"></div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1427,7 +1450,7 @@ module.exports = "<h2 class=\"page-header\">Please sign in</h2>\n<form (submit)=
 /***/ 795:
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"user\">\n  <h2 class=\"page-header\">Store management</h2>\n  <div>\n  <h3>Admin Profile</h3>\n  <p-growl [value]=\"growlmsgs\"></p-growl>\n  <ul class=\"list-group\">\n    <li class=\"list-group-item\">Name: {{user.name}}</li>\n    <li class=\"list-group-item\">Username: {{user.username}}</li>\n    <li class=\"list-group-item\">Email: {{user.email}}</li>\n  </ul>\n  </div>\n  <br>\n  <div>\n  <h3>Inventory List</h3>\n  <ul class=\"\">\n    <table class=\"table table-hover table-striped table-responsive table-condensed\">\n                <thead>\n                    <tr>\n                        <th class=\"col-xs-2\">Name</th>\n                        <th class=\"col-xs-1\">Price</th>\n                        <th class=\"col-xs-2\">Description</th>\n                        <th class=\"col-xs-2\">quantity</th>\n                        <th class=\"col-xs-2\">imageUrl</th>\n                        <th class=\"col-xs-1\">Department</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr *ngFor=\"let item of PatientsFiltered\">\n                        <td>{{item.p_full_name}}</td>\n                        <td>{{item.P_DOB | date:'dd/MM/yyyy'}}</td>\n                        <td>{{item.p_tel_num}}</td>\n                        <td>{{item.p_Address1}}</td>\n                        <td>{{item.p_Address2}}</td>\n                        <td>{{item.p_city}}</td>\n                        <td>{{item.p_county | uppercase}}</td>\n                    </tr>\n                </tbody>\n            </table>\n  </ul>\n  </div>\n  <div class=\"col-sm-12\">\n  <h3>Inventory Management</h3>\n  <!--Add Product-->\n      <div class=\"col-md-4\">\n        <h4><strong>Add Inventory</strong></h4>\n        <form (submit)=\"onAddProduct()\">\n        <div class=\"form-group\">\n          <label>Product Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"name\" name=\"name\">\n        </div>\n        <div>\n          <label>Price</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"price\" name=\"price\">\n        </div>\n        <div>\n          <label>Description</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"desc\" name=\"desc\">\n        </div>\n        <div>\n          <label>Quantity</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"qty\" name=\"qty\">\n        </div>\n        <div>\n          <label>Image</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"image\" name=\"image\">\n        </div>\n        <div>\n          <label>Department</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"department\" name=\"department\">\n        </div>\n        <br>\n        <input type=\"submit\" class=\"btn btn-success\" value=\"Add\">\n    </form>\n    </div>\n    <div class=\"col-md-4\">\n    <h4><strong>Update Product</strong></h4>\n    <form (submit)=\"onLoginSubmit()\">\n      <div class=\"form-group\">\n        <label>Username</label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"username\" name=\"username\">\n      </div>\n      <div>\n        <label>Password</label>\n        <input type=\"password\" class=\"form-control\" [(ngModel)]=\"password\" name=\"password\">\n      </div>\n      <br>\n      <input type=\"submit\" class=\"btn btn-primary\" value=\"Update\">\n    </form>\n    </div>\n    <div class=\"col-md-4\">\n      <h4><strong>Delete Product</strong></h4>\n    <form (submit)=\"onLoginSubmit()\">\n      <div class=\"form-group\">\n        <label>Username</label>\n        <input type=\"text\" class=\"form-control\" [(ngModel)]=\"username\" name=\"username\">\n      </div>\n      <div>\n        <label>Password</label>\n        <input type=\"password\" class=\"form-control\" [(ngModel)]=\"password\" name=\"password\">\n      </div>\n      <br>\n      <input type=\"submit\" class=\"btn btn-danger\" value=\"Delete\">\n    </form>\n    </div>\n  </div>\n  \n    <!--Spacer for the footer do not remove-->\n  <div class=\"spacer\"></div>\n  <div class=\"note\">Note: Add, update and delete customers and admin also coming soon...</div>\n\n\n\n"
+module.exports = "<div *ngIf=\"user\">\n  <h2 class=\"page-header\">Store management</h2>\n  <div>\n  <h3>Admin Profile</h3>\n  <p-growl [value]=\"growlmsgs\"></p-growl>\n  <ul class=\"list-group\">\n    <li class=\"list-group-item\">Name: {{user.name}}</li>\n    <li class=\"list-group-item\">Username: {{user.username}}</li>\n    <li class=\"list-group-item\">Email: {{user.email}}</li>\n  </ul>\n  </div>\n  <br>\n  <div>\n  <h3>Inventory List</h3>\n  <ul class=\"\">\n    <table class=\"table table-hover table-striped table-responsive table-condensed\">\n                <thead>\n                    <tr>\n                        <th class=\"col-xs-2\">Product ID</th>\n                        <th class=\"col-xs-2\">Name</th>\n                        <th class=\"col-xs-1\">Price</th>\n                        <th class=\"col-xs-2\">Description</th>\n                        <th class=\"col-xs-2\">quantity</th>\n                        <th class=\"col-xs-2\">imageUrl</th>\n                        <th class=\"col-xs-1\">Department</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr *ngFor=\"let product of products\">\n                        <td>{{product._id}}</td>\n                        <td>{{product.name}}</td>\n                        <td>{{product.price}}</td>\n                        <td>{{product.description}}</td>\n                        <td>{{product.quantity}}</td>\n                        <td>{{product.imageUrl}}</td>\n                        <td>{{product.department}}</td>\n                        <td><input type=\"button\" value=\"delete\" class=\"btn btn-danger\" (click)=\"deleteProduct(product._id)\"><td>\n                    </tr>\n                </tbody>\n            </table>\n  </ul>\n  </div>\n  <div class=\"col-sm-12\">\n  <h3>Inventory Management</h3>\n  <!--Add Product-->\n      <div class=\"col-md-5\">\n        <h4><strong>Add Inventory</strong></h4>\n        <form (submit)=\"onAddProduct()\">\n        <div class=\"form-group\">\n          <label>Product Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"name\" name=\"name\">\n        </div>\n        <div>\n          <label>Price</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"price\" name=\"price\">\n        </div>\n        <div>\n          <label>Description</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"description\" name=\"description\">\n        </div>\n        <div>\n          <label>Quantity</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"quantity\" name=\"quantity\">\n        </div>\n        <div>\n          <label>Image</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"imageUrl\" name=\"imageUrl\">\n        </div>\n        <div>\n          <label>Department</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"department\" name=\"department\">\n        </div>\n        <br>\n        <input type=\"submit\" class=\"btn btn-success\" value=\"Add\">\n    </form>\n    </div>\n    <div class=\"col-md-5\">\n      <h4><strong>Update Products</strong></h4>\n    </div>\n    <!--Spacer for the footer do not remove-->\n  <div class=\"col-md-12\">\n  <div class=\"spacer\"></div>\n  <div class=\"note\">Note: Add, update and delete customers and admin also coming soon...</div>\n  </div>\n\n\n\n"
 
 /***/ }),
 

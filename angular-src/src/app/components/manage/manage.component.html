@@ -16,6 +16,7 @@
     <table class="table table-hover table-striped table-responsive table-condensed">
                 <thead>
                     <tr>
+                        <th class="col-xs-2">Product ID</th>
                         <th class="col-xs-2">Name</th>
                         <th class="col-xs-1">Price</th>
                         <th class="col-xs-2">Description</th>
@@ -25,14 +26,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of PatientsFiltered">
-                        <td>{{item.p_full_name}}</td>
-                        <td>{{item.P_DOB | date:'dd/MM/yyyy'}}</td>
-                        <td>{{item.p_tel_num}}</td>
-                        <td>{{item.p_Address1}}</td>
-                        <td>{{item.p_Address2}}</td>
-                        <td>{{item.p_city}}</td>
-                        <td>{{item.p_county | uppercase}}</td>
+                    <tr *ngFor="let product of products">
+                        <td>{{product._id}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.price}}</td>
+                        <td>{{product.description}}</td>
+                        <td>{{product.quantity}}</td>
+                        <td>{{product.imageUrl}}</td>
+                        <td>{{product.department}}</td>
+                        <td><input type="button" value="delete" class="btn btn-danger" (click)="deleteProduct(product._id)"><td>
                     </tr>
                 </tbody>
             </table>
@@ -41,7 +43,7 @@
   <div class="col-sm-12">
   <h3>Inventory Management</h3>
   <!--Add Product-->
-      <div class="col-md-4">
+      <div class="col-md-5">
         <h4><strong>Add Inventory</strong></h4>
         <form (submit)="onAddProduct()">
         <div class="form-group">
@@ -54,15 +56,15 @@
         </div>
         <div>
           <label>Description</label>
-          <input type="text" class="form-control" [(ngModel)]="desc" name="desc">
+          <input type="text" class="form-control" [(ngModel)]="description" name="description">
         </div>
         <div>
           <label>Quantity</label>
-          <input type="text" class="form-control" [(ngModel)]="qty" name="qty">
+          <input type="text" class="form-control" [(ngModel)]="quantity" name="quantity">
         </div>
         <div>
           <label>Image</label>
-          <input type="text" class="form-control" [(ngModel)]="image" name="image">
+          <input type="text" class="form-control" [(ngModel)]="imageUrl" name="imageUrl">
         </div>
         <div>
           <label>Department</label>
@@ -72,41 +74,14 @@
         <input type="submit" class="btn btn-success" value="Add">
     </form>
     </div>
-    <div class="col-md-4">
-    <h4><strong>Update Product</strong></h4>
-    <form (submit)="onLoginSubmit()">
-      <div class="form-group">
-        <label>Username</label>
-        <input type="text" class="form-control" [(ngModel)]="username" name="username">
-      </div>
-      <div>
-        <label>Password</label>
-        <input type="password" class="form-control" [(ngModel)]="password" name="password">
-      </div>
-      <br>
-      <input type="submit" class="btn btn-primary" value="Update">
-    </form>
+    <div class="col-md-5">
+      <h4><strong>Update Products</strong></h4>
     </div>
-    <div class="col-md-4">
-      <h4><strong>Delete Product</strong></h4>
-    <form (submit)="onLoginSubmit()">
-      <div class="form-group">
-        <label>Username</label>
-        <input type="text" class="form-control" [(ngModel)]="username" name="username">
-      </div>
-      <div>
-        <label>Password</label>
-        <input type="password" class="form-control" [(ngModel)]="password" name="password">
-      </div>
-      <br>
-      <input type="submit" class="btn btn-danger" value="Delete">
-    </form>
-    </div>
-  </div>
-  
     <!--Spacer for the footer do not remove-->
+  <div class="col-md-12">
   <div class="spacer"></div>
   <div class="note">Note: Add, update and delete customers and admin also coming soon...</div>
+  </div>
 
 
 
