@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
 //Product Schema
@@ -8,7 +9,7 @@ const ProductSchema = mongoose.Schema({
         required: true
     },
     price: {
-        type: Number,
+        type: String,
         required: true
     },
     description: {
@@ -30,3 +31,11 @@ const ProductSchema = mongoose.Schema({
 });
 
 const Product = module.exports = mongoose.model('Product', ProductSchema);
+
+module.exports.addProduct = function(newProduct, callback){
+    newProduct.save(callback);
+}
+
+// module.exports.getProducts = function(products, callback){
+//     products.find(products, callback);
+// }

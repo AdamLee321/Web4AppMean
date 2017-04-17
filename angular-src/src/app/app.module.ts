@@ -21,15 +21,16 @@ import { AboutComponent }       from './components/about/about.component';
 import { CartComponent }        from './components/cart/cart.component';
 import { ManageComponent }      from './components/manage/manage.component';
 import { InventoryComponent }   from './components/inventory/inventory.component';
+import { ProductService }   from './services/product.service';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { FinalcheckoutComponent } from './components/finalcheckout/finalcheckout.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 //NOTE:services dont get added to the app.module file automatically add below and also add to providers.
 import { ValidateService }  from './services/validate.service';
 import { AuthService }      from './services/auth.service';
-import { ProductService }   from './services/product.service';
-import { CheckoutComponent } from './components/checkout/checkout.component';
-import { FinalcheckoutComponent } from './components/finalcheckout/finalcheckout.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { EasterEggComponent } from './components/easter-egg/easter-egg.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
@@ -44,7 +45,9 @@ const appRoutes: Routes = [
   {path:'inventory', component: InventoryComponent},
   {path:'admin/manage', component: ManageComponent},
   {path:'checkout', component: CheckoutComponent},
-  {path:'finalcheckout', component: FinalcheckoutComponent}
+  {path:'finalcheckout', component: FinalcheckoutComponent},
+  //Suprise for a curious developer or explorer -- Happy Easter
+  {path:'adamlee/42easteregg', component: EasterEggComponent}
 
 ]
 
@@ -65,7 +68,8 @@ const appRoutes: Routes = [
     InventoryComponent,
     CheckoutComponent,
     FinalcheckoutComponent,
-    FooterComponent
+    FooterComponent,
+    EasterEggComponent
   ],
   imports: [
     BrowserModule,

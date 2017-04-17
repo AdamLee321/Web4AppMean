@@ -13,11 +13,11 @@ export class ProductService {
     //going to the backend
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('http://localhost:3000/users/register', product,{headers: headers})
+    return this.http.post('products/addproduct', product,{headers: headers})
       .map(res => res.json());
   }
 
-  getProducts(product){
-
+  getProducts(){
+    return this.http.get('products/getproducts').map(res => res.json());
   }
 }

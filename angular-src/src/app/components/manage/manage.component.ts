@@ -43,14 +43,15 @@ export class ManageComponent implements OnInit {
       qty: this.qty,
       image: this.image,
       department: this.department
-      }
+    }
+    console.log(product);
       this.productService.addProduct(product).subscribe(data => {
         if(data.success){
         this.growlmsgs.push({severity:'success', summary:'Product has been added to the database.'});
         //this.router.navigate(['/login']);
       } else{
         this.growlmsgs.push({severity:'error', summary:'Oops! Something went wrong! Please try again.'});
-        this.router.navigate(['/manage']);
+        this.router.navigate(['/admin/manage']);
       }
     });
   }
