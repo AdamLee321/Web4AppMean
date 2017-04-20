@@ -7,7 +7,7 @@ const User = require('../models/user');
 // Twilio Credentials
 var accountSid = 'AC49f3231ca811745d8c009eb51195520f';
 var authToken = '34ce3a4859a3a42d7612a5daa1bd2735';
-var client = require('twilio')(accountSid, authToken);
+//var client = require('twilio')(accountSid, authToken);
 
 //Register
 router.post('/register', (req, res, next) => {
@@ -24,13 +24,13 @@ router.post('/register', (req, res, next) => {
             res.json({success: false, msg:'Failed to register user'});
         } else {
             res.json({success: true, msg:'User successfully registered'});
-            client.messages.create({
-            to: '+353857327698',
-            from: '+353861802296',
-            body: 'Test Message from Twilio',
-                }, function (err, message) {
-                    console.log(message.sid);
-            });
+            // client.messages.create({
+            // to: '+353857327698',
+            // from: '+353861802296',
+            // body: 'Test Message from Twilio',
+            //     }, function (err, message) {
+            //         console.log(message.sid);
+            // });
         }
     });
 });
