@@ -26,7 +26,7 @@ const products = require('./routes/products');
 const contacts = require('./routes/contacts');
 
 //My Port Number
-const port = 3000;
+const port = process.env.PORT || 8080;
 
 //CORS middlewar
 app.use(cors());
