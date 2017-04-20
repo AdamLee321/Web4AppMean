@@ -16,7 +16,8 @@
     "mongojs": "*",
     "mongoose": "*",
     "passport": "*",
-    "passport-jwt": "*"
+    "passport-jwt": "*",
+    "twilio": "*"
   },
   "author": "Adam Lee",
   "license": "ISC"
