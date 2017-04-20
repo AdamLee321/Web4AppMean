@@ -15,14 +15,14 @@ export class AuthService {
     //going to the backend
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('http://localhost:3000/users/register', user,{headers: headers})
+    return this.http.post('users/register', user,{headers: headers})
       .map(res => res.json());
   }
 
   authenticateUser(user){
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('http://localhost:3000/users/authenticate', user,{headers: headers})
+    return this.http.post('users/authenticate', user,{headers: headers})
       .map(res => res.json());
   }
 
@@ -31,7 +31,7 @@ export class AuthService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type','application/json');
-    return this.http.get('http://localhost:3000/users/profile', {headers: headers})
+    return this.http.get('users/profile', {headers: headers})
       .map(res => res.json());
   }
 
@@ -45,6 +45,12 @@ export class AuthService {
   loadToken(){
     const token = localStorage.getItem('id_token');
     this.authToken = token;
+  }
+
+  isAdmin(user){
+    if((user.username = "admin") && (user.password = "admin")){
+      return tokenNotExpired('id_token');
+    }
   }
 
   loggedIn(){

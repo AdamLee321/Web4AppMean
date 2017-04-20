@@ -63,19 +63,27 @@
           <input type="text" class="form-control" [(ngModel)]="quantity" name="quantity">
         </div>
         <div>
-          <label>Image</label>
-          <input type="text" class="form-control" [(ngModel)]="imageUrl" name="imageUrl">
-        </div>
-        <div>
           <label>Department</label>
           <input type="text" class="form-control" [(ngModel)]="department" name="department">
+        </div>
+        <div>
+          <label>Image</label>
+        <image-upload 
+        ></image-upload>
         </div>
         <br>
         <input type="submit" class="btn btn-success" value="Add">
     </form>
     </div>
     <div class="col-md-5">
-      <h4><strong>Update Products</strong></h4>
+      <h4><strong>Update Product</strong></h4>
+      <label>Select Product...</label>
+      <select class="form-control"[(ngModel)]="name">
+        <option value="" selected disabled>Please select...</option>
+        <option placeholder="Select Product..." *ngFor="let product of products" [ngValue]="product.name" [ngValue]="product.price" (click)="getProducts(products)">{{product.name}}</option>
+      </select>
+      <br>
+      <input type="submit" class="btn btn-info" value="update" (click)="updateProductList()">
     </div>
     <!--Spacer for the footer do not remove-->
   <div class="col-md-12">

@@ -10,12 +10,16 @@ export class AuthGuard implements CanActivate{
         private router: Router 
     ){}
 
-    canActivate(){
-        if(this.authService.loggedIn()){
+    canActivate(user){
+        if(this.authService.isAdmin(user)){
             return true;
         } else {
-            this.router.navigate(['/login']);
-            return false;
+            if(this.authService.loggedIn()){
+                return true;
+            } else {
+                this.router.navigate(['/login']);
+                return false;
+            }
         }
     }
 } 

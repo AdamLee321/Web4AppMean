@@ -29,8 +29,8 @@ export class FinalcheckoutComponent implements OnInit {
     });
 
     handler.open({
-      name: 'Demo Site',
-      description: '2 widgets',
+      name: 'eCommerce Site',
+      description: '',
       amount: 2000
     });
   }

@@ -1,80 +1,32 @@
-<div class="col-md-12" id="rcorners2"><app-checkout ></app-checkout></div>
-<div class="col-md-4">
-  <ul *ngFor="let product of products">
-  <li>{{ product.name }}<li>
-  <li>{{ product.price }}</li>
-  </ul>
+<div>
+  <h2 class="page-header">Products</h2>
+  <div class="col-md-6" *ngFor="let product of products">
+    <div class="well">
+      <div class="thumbnail">
+        {{product.imageUrl}}
+        </div>
+      <div>
+        <h4>{{product.name}}</h4>
+      </div>
+      <div>
+        <p><strong>Price:</strong></p> €{{product.price}}
+      </div>
+      <br>
+      <div>
+        <p><strong>Description:</strong></p>{{product.description}}
+      </div>
+      <br>
+      <div>
+        <p><strong>Category:</strong></p> {{product.department}}
+      </div>
+      <div>
+        <button type="submit" class="btn btn-success">
+          Add <span class="glyphicon glyphicon-shopping-cart"></span>
+        </button>
+      </div>
+    </div>                              
+  <br><br>
+  </div>
 </div>
 
-<!--row 1-->
-<div class="col-sm-12"> 
-<div class="row">
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<!--row2-->
-<div class="col-sm-12"> 
-<div class="row">
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="spacer"></div>
-</div>
 

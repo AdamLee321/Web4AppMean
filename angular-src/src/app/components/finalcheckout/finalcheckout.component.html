@@ -1,12 +1,12 @@
-<h1>Custom Stripe Form</h1>
+<h2 class="page-header">Checkout</h2>
 
-<form action="" method="POST" id="payment-form" (submit)="getToken()">
+<form class="form-group" action="" method="POST" id="payment-form" (submit)="getToken()">
   <span class="payment-message">{{message}}</span>
 
   <div class="form-row">
     <label>
       <span>Card Number</span>
-      <input [(ngModel)]="cardNumber" name="card-number" type="text" size="20" data-stripe="number">
+      <input [(ngModel)]="cardNumber"class="form-control" name="card-number" type="text" size="20" data-stripe="number">
     </label>
   </div>
 
@@ -22,10 +22,11 @@
   <div class="form-row">
     <label>
       <span>CVC</span>
-      <input [(ngModel)]="cvc" name="cvc" type="text" size="4" data-stripe="cvc">
+      <input [(ngModel)]="cvc"class="form-control" name="cvc" type="text" size="4" data-stripe="cvc">
     </label>
   </div>
 
-  <input type="submit" value="Submit Payment">
+  <input type="submit" class="btn btn-info" value="Validate Card">
+  <button class="btn btn-success"(click)="openCheckout()">Checkout</button>
 </form>
-<button (click)="openCheckout()">Purchase</button>
+

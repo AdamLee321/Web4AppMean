@@ -13,16 +13,23 @@ export class ProductService {
     //going to the backend
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    return this.http.post('http://localhost:3000/products/addproduct', product,{headers: headers})
+    return this.http.post('products/addproduct', product,{headers: headers})
       .map(res => res.json());
   }
 
 //Get All Products
   getProducts(){
-    return this.http.get('http://localhost:3000/products/getproducts').map(res => res.json());
+    return this.http.get('products/getproducts').map(res => res.json());
   }
 
-  deleteTask(id){
-    return this.http.delete('http://localhost:3000/products/product/' + id).map(res => res.json);
+  deleteProduct(product){
+    return this.http.delete('products/product/' + product).map(res => res.json);
+  }
+
+  updateProduct(product){
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    return this.http.put('products/addproduct', product,{headers: headers})
+      .map(res => res.json());
   }
 }

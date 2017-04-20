@@ -76,7 +76,9 @@ router.put('/product/:id', function(req,res,next){
         res.status(400);
         res.json({
             "error":"Bad Data"
+            
         });
+        console.log(updProduct);
     } else{
         db.products.update({_id: mongojs.ObjectId(req.params.id)}, updProduct, {} ,function(err, product){
             if(err){
@@ -90,8 +92,8 @@ router.put('/product/:id', function(req,res,next){
 });
 
 //Delete Product
-router.delete('/product/:name', function(req,res,next){
-    db.products.remove({_name: mongojs.ObjectId(req.params.name)},function(err, product){
+router.delete('/product/:id', function(req,res,next){
+    db.products.remove({_id: mongojs.ObjectId(req.params.id)},function(err, product){
         if(err){
             res.send(err);
         } else{

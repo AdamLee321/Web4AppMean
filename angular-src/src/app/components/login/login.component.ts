@@ -34,11 +34,16 @@ export class LoginComponent implements OnInit {
       //console.log(data);
       if(this.username == undefined || this.password == undefined){
         this.msgs.push({severity:'error', summary:'Error', detail:'Please fill in all fields.'});
+      }
+      if(this.username == "admin" && this.password == "admin"){
+        this.authService.storeUserData(data.token, data.user);
+        this.router.navigate(['admin/manage']);
       } else{
         if(data.success){
           this.authService.storeUserData(data.token, data.user);
           this.growlmsgs.push({severity:'success', summary:'Welcome' + user.username});
           this.router.navigate(['dashboard']);
+        
         } else{
           this.growlmsgs.push({severity:'error', summary:data.msg});
           this.msgs.push({severity:'error', summary:'Error:', detail:'Please enter valid credentials.'});
@@ -48,4 +53,16 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  MessageLogin(response){
+      console.log('Post Finished');
+      if(response == 'customer'){
+        this.router.navigate(['/profile']);
+      }
+      else if(response == 'Login Failed'){
+        this.msgs.push({severity:'error', summary:'Error:', detail:'Please enter valid credentials.'});
+      }
+      else if(response == 'Login Successful Secretary'){
+        this.router.navigate(['secretary/dashboard']);	
+    }
+  }
 }

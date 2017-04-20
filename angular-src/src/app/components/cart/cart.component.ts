@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../../services/product.service';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-cart',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartComponent implements OnInit {
 
-  constructor() { }
+  public cart = [];
+  public totalPrice: number;
+  public totalQuantity: number;
+  public cartSubscription: Subscription;
 
-  ngOnInit() {
+  constructor(private productService:ProductService) {}
+
+  removeProduct(product) {
+    //this.cartStore.removeFromCart(product)
   }
 
+  checkout() {
+    alert('Sorry! Checkout will be coming soon!')
+  }
+
+  ngOnInit() {
+    // this.cartSubscription = this.cartStore.getState().subscribe(res => {
+    //   this.cart = res.products
+    //   this.getTotalPrice()
+    // })
+  }
 }

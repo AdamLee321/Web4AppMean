@@ -7,6 +7,9 @@ import { GrowlModule }          from 'primeng/primeng';
 import { MessagesModule }       from 'primeng/primeng';
 import { MenuItem }             from 'primeng/components/common/api';
 import { AuthGuard }            from './guards/auth.guard';
+//import { FileSelectDirective, FileDropDirective, FileUploader } from 'ng2-file-upload/ng2-file-upload';
+import { ImageUploadModule }    from 'angular2-image-upload';
+import { AgmCoreModule }        from 'angular2-google-maps/core';
 
 import { AppComponent }         from './app.component';
 import { NavbarComponent }      from './components/navbar/navbar.component';
@@ -29,8 +32,10 @@ import { FooterComponent } from './components/footer/footer.component';
 
 //NOTE:services dont get added to the app.module file automatically add below and also add to providers.
 import { ValidateService }  from './services/validate.service';
+import { ContactService }  from './services/contact.service';
 import { AuthService }      from './services/auth.service';
 import { EasterEggComponent } from './components/easter-egg/easter-egg.component';
+import { MapsComponent } from './components/maps/maps.component';
 
 const appRoutes: Routes = [
   {path:'', component: HomeComponent},
@@ -43,7 +48,7 @@ const appRoutes: Routes = [
   {path:'about', component: AboutComponent},
   {path:'cart', component: CartComponent},
   {path:'inventory', component: InventoryComponent},
-  {path:'admin/manage', component: ManageComponent},
+  {path:'admin/manage', component: ManageComponent, canActivate:[AuthGuard]},
   {path:'checkout', component: CheckoutComponent},
   {path:'finalcheckout', component: FinalcheckoutComponent},
   //Suprise for a curious developer or explorer -- Happy Easter
@@ -69,7 +74,9 @@ const appRoutes: Routes = [
     CheckoutComponent,
     FinalcheckoutComponent,
     FooterComponent,
-    EasterEggComponent
+    EasterEggComponent,
+    CartComponent,
+    MapsComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,9 +84,13 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     MessagesModule,
-    GrowlModule
+    GrowlModule,
+    ImageUploadModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDOCmJyU4z8Wcbmbb0DCo32D1zTWVX4QNA'
+    })
   ],
-  providers: [ValidateService, AuthService, ProductService, AuthGuard],
+  providers: [ValidateService, AuthService, ProductService, ContactService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

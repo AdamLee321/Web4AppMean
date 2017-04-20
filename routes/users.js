@@ -4,21 +4,33 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
-
+// Twilio Credentials
+var accountSid = 'AC49f3231ca811745d8c009eb51195520f';
+var authToken = '34ce3a4859a3a42d7612a5daa1bd2735';
+var client = require('twilio')(accountSid, authToken);
 
 //Register
 router.post('/register', (req, res, next) => {
     let newUser = new User({
         name: req.body.name,
         email: req.body.email,
+        phone: req.body.phone,
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        role: req.body.role
     });
     User.addUser(newUser, (err, user) => {
         if(err){
             res.json({success: false, msg:'Failed to register user'});
         } else {
             res.json({success: true, msg:'User successfully registered'});
+            client.messages.create({
+            to: '+353857327698',
+            from: '+353861802296',
+            body: 'Test Message from Twilio',
+                }, function (err, message) {
+                    console.log(message.sid);
+            });
         }
     });
 });
@@ -33,7 +45,6 @@ router.post('/authenticate', (req, res, next) => {
         if(!user){
             return res.json({success: false, msg: 'User not found'});
         }
-
         User.comparePassword(password, user.password, (err, isMatch) => {
             if(err) throw err;
             if(isMatch){
@@ -48,9 +59,10 @@ router.post('/authenticate', (req, res, next) => {
                        id: user._id,
                        name: user.name,
                        username: user.username,
-                       //Not returnng password for security reasons
+                       //Not returing password for security reasons
                        //Never return the password
-                       email: user.email 
+                       email: user.email,
+                       role: user.role
                     }
                 });
             } else {
