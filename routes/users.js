@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 const User = require('../models/user');
 // Twilio Credentials
-var accountSid = 'AC49f3231ca811745d8c009eb51195520f';
-var authToken = '34ce3a4859a3a42d7612a5daa1bd2735';
+var accountSid = 'AC557e4f4a92340eb69764e0181612ace1';
+var authToken = '77b8bb62e21c3206200c852ff43adc2c';
 var client = require('twilio')(accountSid, authToken);
 
 //Register
@@ -26,7 +26,7 @@ router.post('/register', (req, res, next) => {
             res.json({success: true, msg:'User successfully registered'});
             client.messages.create({
             to: '+353857327698',
-            from: '+353861802296',
+            from: '+353861802448',
             body: 'Test Message from Twilio',
                 }, function (err, message) {
                     console.log(message.sid);
